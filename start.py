@@ -18,24 +18,23 @@ for cell in sheet['C'][1:]:
     excel_item_data.append(cell.value)
 
 
-# options = webdriver.ChromeOptions()
-# options.add_argument("headless")
-# browser = webdriver.Chrome(options=options)
-browser = webdriver.Chrome()
-browser.maximize_window()
+options = webdriver.ChromeOptions()
+options.add_argument("headless")
+browser = webdriver.Chrome(options=options)
+
+# browser = webdriver.Chrome()
+# browser.maximize_window()
 
 def search(item):
     url = "https://itemscout.io/"
     browser.get(url)
-    # time.sleep(3)
-    browser.implicitly_wait(10)
-    # WebDriverWait(browser, 5).until(EC.element_to_be_clickable((By.XPATH, "//*[@id='explore']/div/form/div/input")))
+    time.sleep(3)
+    # browser.implicitly_wait(10)
     search_input = browser.find_element(By.XPATH, "//*[@id='explore']/div/form/div/input")
     search_input.send_keys(item)
     search_input.send_keys("\n")
-    # time.sleep(3)
-    browser.implicitly_wait(10)
-    # WebDriverWait(browser, 5).until(EC.presence_of_element_located((By.XPATH, "//*[@id='app']/div/main/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div[1]/div[2]/div[1]/div[2]/div[3]/div[2]")))
+    time.sleep(3)
+    # browser.implicitly_wait(10)
     item_ratio_text = browser.find_element(By.XPATH, "//*[@id='app']/div/main/div/div/div[2]/div/div[1]/div[2]/div/div[2]/div[1]/div[2]/div[1]/div[2]/div[3]/div[2]").text
     item_ratio_data.append(item_ratio_text[0:2])
 
@@ -43,7 +42,7 @@ for item in excel_item_data[0:3]:
     search(item)
 
 for i, data in enumerate(item_ratio_data, start=1):
-    cell = sheet.cell(row=i, column=1)
+    cell = sheet.cell(row=i, column=5)
     cell.value = data
 
 
